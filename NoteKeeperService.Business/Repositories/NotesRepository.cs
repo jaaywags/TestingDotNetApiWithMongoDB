@@ -10,7 +10,6 @@ public interface INotesRepository
 
 public class NotesRepository : INotesRepository
 {
-  private readonly IMongoDatabase _database;
   private readonly IMongoCollection<Note> _collection;
 
   public NotesRepository(DBContext dbContext)
@@ -21,7 +20,7 @@ public class NotesRepository : INotesRepository
   public async Task<Note> GetNote(string id)
   {
     var filterBuilder = Builders<Note>.Filter;
-    var filter = filterBuilder.Eq("_id", "");
+    var filter = filterBuilder.Eq("_id", id);
     return await _collection.Find(filter).SingleOrDefaultAsync();
   }
 }
